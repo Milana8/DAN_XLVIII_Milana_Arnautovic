@@ -18,7 +18,7 @@ namespace Zadatak_1.ViewModel
 
 
         private int totalPrice = 0;
-        static string JMBG = " ";
+        static string Username = " ";
 
         #region Constructor
         public GuestViewModel(GuestView guestViewOpen, string username)
@@ -171,7 +171,7 @@ namespace Zadatak_1.ViewModel
             try
             {
                 Order.ProductID = Product.ProductID;
-                Order.Username = JMBG;
+                Order.Username = Username;
                 if (Order.Quantity <= 0)
                 {
                     MessageBox.Show("Choose what you want to order");
