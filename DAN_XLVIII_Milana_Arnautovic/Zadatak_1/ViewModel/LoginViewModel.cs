@@ -89,9 +89,9 @@ namespace Zadatak_1.ViewModel
                     mw.ShowDialog();
                 }
 
-                else if (JMBGisValid(Username) && Password == "Gost")
+                else if (JMBGisValid(Username)==true && Password == "Gost")
                 {
-                    GuestView guest = new GuestView();
+                    GuestView guest = new GuestView(Username);
                     view.Close();
                     guest.Show();
                     return;
@@ -109,9 +109,23 @@ namespace Zadatak_1.ViewModel
             }
         }
 
+        /// <summary>
+        /// Method to confirm login command execution
+        /// </summary>
+        /// <returns></returns>
+        private bool CanLoginExecute(object o)
+        {
+            return true;
+        }
+
 
         #endregion
 
+        /// <summary>
+        /// Validation for JMBG
+        /// </summary>
+        /// <param name="JMBG"></param>
+        /// <returns></returns>
         /// <summary>
         /// Validation for JMBG
         /// </summary>
@@ -189,5 +203,3 @@ namespace Zadatak_1.ViewModel
         }
     }
 }
-
-

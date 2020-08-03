@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Zadatak_1.ViewModel;
 
 namespace Zadatak_1.View
 {
@@ -19,9 +20,10 @@ namespace Zadatak_1.View
     /// </summary>
     public partial class GuestView : Window
     {
-        public GuestView()
+        public GuestView(string username)
         {
             InitializeComponent();
+            this.DataContext = new GuestViewModel(this, username);
         }
     }
 }
