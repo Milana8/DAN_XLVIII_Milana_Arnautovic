@@ -49,28 +49,32 @@ namespace Zadatak_1
             }
         }
 
-
-        public void AddOrder(string username)
+        public tblOrder CreateOrder(tblOrder order)
         {
             try
             {
                 using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
                 {
-                    tblOrder order = new tblOrder
-                    {
-                        OrderDate = DateTime.Now,
-                        Username = username,
-                        OrderStatus = "pennding"
-                    };
-                    context.tblOrders.Add(order);
+
+                    tblOrder newOrder = new tblOrder();
+                    newOrder.Username = order.Username;
+                    newOrder.ProductID = order.ProductID;
+                    newOrder.Quantity = order.Quantity;
+                    newOrder.OrderDate = DateTime.Now;
+                    newOrder.OrderStatus = order.OrderStatus;
+                    context.tblOrders.Add(newOrder);
                     context.SaveChanges();
+                    order.OrderID = newOrder.OrderID;
+                    return order;
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Exception" + ex.Message.ToString());
+                System.Diagnostics.Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
             }
         }
+
 
         public vwOrder ViewOrder(string username)
         {
