@@ -39,7 +39,8 @@
                                     Binding="{Binding ProductName}" />
                 <DataGridTextColumn Header="Price"
                                     Binding="{Binding Price}" />
-                <DataGridTemplateColumn Header="Quantity">
+
+                <DataGridTemplateColumn Header="Quantity" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Text="{Binding Path=Order.Quantity,

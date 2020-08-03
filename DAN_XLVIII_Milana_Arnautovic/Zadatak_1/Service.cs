@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,23 +28,7 @@ namespace Zadatak_1
             }
         }
 
-        public List<tblOrder> GetAllOrders()
-        {
-            try
-            {
-                using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
-                {
-                    List<tblOrder> orders = new List<tblOrder>();
-                    orders = (from x in context.tblOrders select x).ToList();
-                    return orders;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Exception" + ex.Message.ToString());
-                return null;
-            }
-        }
+
 
 
 
@@ -65,32 +50,78 @@ namespace Zadatak_1
         }
 
 
-        public tblOrder CreateOrder(tblOrder order)
+        public void AddOrder(string username)
         {
             try
             {
                 using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
                 {
-
-                    tblOrder newOrder = new tblOrder();
-                    newOrder.Username = order.Username;
-                    newOrder.ProductID = order.ProductID;
-                    newOrder.Quantity = order.Quantity;
-                    newOrder.OrderDate = DateTime.Now;
-                    newOrder.OrderStatus = order.OrderStatus;
-                    context.tblOrders.Add(newOrder);
+                    tblOrder order = new tblOrder
+                    {
+                        OrderDate = DateTime.Now,
+                        Username = username,
+                        OrderStatus = "pennding"
+                    };
+                    context.tblOrders.Add(order);
                     context.SaveChanges();
-                    order.OrderID = newOrder.OrderID;
-                    return order;
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("Exception" + ex.Message.ToString());
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+            }
+        }
+
+        public vwOrder ViewOrder(string username)
+        {
+            try
+            {
+                using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
+                {
+                    return context.vwOrders.Where(x => x.Username == username).FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
                 return null;
             }
         }
 
+        public void ConfirmOrder(vwOrder order)
+        {
+            try
+            {
+                using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
+                {
+                    tblOrder orderToEdit = context.tblOrders.Where(x => x.OrderID == order.OrderID).FirstOrDefault();
+                    orderToEdit.OrderDate = DateTime.Now;
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+            }
+        }
+
+        public List<vwOrder> GetAllOrders()
+        {
+            try
+            {
+                using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
+                {
+                    List<vwOrder> orders = new List<vwOrder>();
+                    orders = (from x in context.vwOrders select x).ToList();
+                    return orders;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
         public tblOrder ChangeOrderStatus(tblOrder order)
         {
             try
@@ -127,8 +158,43 @@ namespace Zadatak_1
                 System.Diagnostics.Debug.WriteLine("Exception " + ex.Message.ToString());
                 return null;
             }
-
         }
+
+        public void ApproveOrder(vwOrder order)
+        {
+            try
+            {
+                using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
+                {
+                    tblOrder orderToApprove = context.tblOrders.Where(x => x.OrderID == order.OrderID).FirstOrDefault();
+                    orderToApprove.OrderStatus = "approved";
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+            }
+        }
+       
+        public void DenyOrder(vwOrder order)
+        {
+            try
+            {
+                using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
+                {
+                    tblOrder orderToReject = context.tblOrders.Where(x => x.OrderID == order.OrderID).FirstOrDefault();
+                    orderToReject.OrderStatus = "denied";
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+            }
+        }
+
     }
 }
+
 

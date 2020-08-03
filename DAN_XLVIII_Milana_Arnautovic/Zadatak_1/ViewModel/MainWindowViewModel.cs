@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using Zadatak_1.Command;
 using Zadatak_1.Model;
 
 namespace Zadatak_1.ViewModel
@@ -15,22 +17,22 @@ namespace Zadatak_1.ViewModel
 
         #region Property
 
-        private tblOrder order;
-        public tblOrder Order
+        private vwOrder ordered;
+        public vwOrder Ordered
         {
             get
             {
-                return order;
+                return ordered;
             }
             set
             {
-                order = value;
-                OnPropertyChanged("Order");
+                ordered = value;
+                OnPropertyChanged("Ordered");
             }
         }
 
-        private List<tblOrder> orderList;
-        public List<tblOrder> OrderList
+        private List<vwOrder> orderList;
+        public List<vwOrder> OrderList
         {
             get
             {
@@ -43,21 +45,6 @@ namespace Zadatak_1.ViewModel
             }
         }
 
-        private Visibility viewOrder = Visibility.Visible;
-        public Visibility ViewOrder
-        {
-            get
-            {
-                return viewOrder;
-            }
-            set
-            {
-                viewOrder = value;
-                OnPropertyChanged("ViewOrder");
-            }
-        }
-
-
         #endregion
 
         #region Constructor
@@ -66,14 +53,14 @@ namespace Zadatak_1.ViewModel
         public MainWindowViewModel(MainWindow employeeOpen)
         {
             main = employeeOpen;
-            using (DAN_XLVIIIEntities context = new DAN_XLVIIIEntities())
-            {
-                OrderList = context.tblOrders.ToList();
-            }
+            OrderList = service.GetAllOrders();
         }
         #endregion
+
+
     }
 }
+
 
 
 

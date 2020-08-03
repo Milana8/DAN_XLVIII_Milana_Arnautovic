@@ -109,16 +109,7 @@ namespace Zadatak_1.ViewModel
             }
         }
 
-        /// <summary>
-        /// Method to confirm login command execution
-        /// </summary>
-        /// <returns></returns>
-        private bool CanLoginExecute(object o)
-        {
-            return true;
-        }
-
-
+       
         #endregion
 
         /// <summary>

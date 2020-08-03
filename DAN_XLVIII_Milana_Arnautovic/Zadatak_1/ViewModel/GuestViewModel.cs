@@ -73,7 +73,7 @@ namespace Zadatak_1.ViewModel
 
 
         private string totalP = "0";
-        public string TotalP
+        public string TotalPrice
         {
             get
             {
@@ -190,7 +190,7 @@ namespace Zadatak_1.ViewModel
                 }
                 totalPrice += (Order.Quantity * Product.Price);
 
-                TotalP = totalPrice.ToString();
+                TotalPrice = totalPrice.ToString();
                 string outputMessage = string.Format("Your order contain {0} {1}", Order.Quantity, Product.ProductName);
                 MessageBox.Show(outputMessage);
             }
